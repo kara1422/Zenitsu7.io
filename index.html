@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>برای قلبم</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Vazirmatn',sans-serif;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      background:
+      radial-gradient(circle at top,#17345e 0%,#08111f 40%,#040912 100%);
+      color:white;
+      overflow-x:hidden;
+      min-height:100vh;
+      position:relative;
+      animation:pageFade 1.5s ease;
+    }
+
+    @keyframes pageFade{
+      from{
+        opacity:0;
+        transform:translateY(10px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    canvas{
+      position:fixed;
+      inset:0;
+      z-index:-2;
+    }
+
+    .overlay{
+      position:fixed;
+      inset:0;
+      background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));
+      z-index:-1;
+    }
+
+    .hero{
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      padding:40px 20px;
+      position:relative;
+    }
+
+    .hero-box{
+      width:100%;
+      max-width:900px;
+      background:rgba(255,255,255,0.08);
+      border:1px solid rgba(255,255,255,0.15);
+      border-radius:35px;
+      padding:60px 35px;
+      backdrop-filter:blur(18px);
+      box-shadow:0 0 60px rgba(120,190,255,0.18);
+      animation:floatBox 5s ease-in-out infinite;
+      transition:0.5s;
+    }
+
+    @keyframes floatBox{
+      0%,100%{
+        transform:translateY(0px);
+      }
+      50%{
+        transform:translateY(-10px);
+      }
+    }
+
+    .hero h1{
+      font-size:4.5rem;
+      color:#dff5ff;
+      text-shadow:0 0 25px #79d4ff;
+      animation:glow 2s infinite alternate;
+    }
+
+    .hero p{
+      margin-top:30px;
+      font-size:1.35rem;
+      line-height:2.5rem;
+      color:#e7f5ff;
+    }
+
+    @keyframes glow{
+      from{
+        text-shadow:0 0 12px #7ed7ff;
+      }
+      to{
+        text-shadow:0 0 40px #4ebdff,0 0 70px #4ebdff;
+      }
+    }
+
+    .scroll{
+      margin-top:45px;
+      color:#bce7ff;
+      animation:bounce 2s infinite;
+      font-size:1rem;
+    }
+
+    @keyframes bounce{
+      0%,100%{
+        transform:translateY(0);
+      }
+      50%{
+        transform:translateY(10px);
+      }
+    }
+
+    .section{
+      padding:90px 20px;
+    }
+
+    .card{
+      width:100%;
+      max-width:850px;
+      margin:auto;
+      background:rgba(255,255,255,0.07);
+      border:1px solid rgba(255,255,255,0.12);
+      border-radius:35px;
+      padding:45px 30px;
+      backdrop-filter:blur(14px);
+      box-shadow:0 0 35px rgba(110,190,255,0.18);
+      position:relative;
+      overflow:hidden;
+      transition:0.5s;
+    }
+
+    .card::before{
+      content:'';
+      position:absolute;
+      width:250px;
+      height:250px;
+      background:rgba(120,200,255,0.12);
+      border-radius:50%;
+      top:-120px;
+      left:-120px;
+      filter:blur(20px);
+    }
+
+    .card h2{
+      font-size:2.3rem;
+      color:#d9f3ff;
+      margin-bottom:25px;
+    }
+
+    .card p{
+      font-size:1.15rem;
+      line-height:2.5rem;
+      color:#eff8ff;
+    }
+
+    .secret{
+      margin-top:60px;
+    }
+
+    input{
+      width:250px;
+      padding:14px;
+      border:none;
+      border-radius:18px;
+      background:rgba(255,255,255,0.9);
+      outline:none;
+      text-align:center;
+      font-size:1rem;
+      margin-top:15px;
+    }
+
+    button{
+      margin-top:20px;
+      padding:14px 30px;
+      border:none;
+      border-radius:18px;
+      background:linear-gradient(45deg,#71d4ff,#b8ecff);
+      color:#02121f;
+      font-size:1rem;
+      cursor:pointer;
+      transition:0.35s;
+      font-weight:bold;
+      box-shadow:0 0 20px rgba(130,210,255,0.35);
+    }
+
+    button:hover{
+      transform:scale(1.06);
+      box-shadow:0 0 35px rgba(130,210,255,0.55);
+    }
+
+    #hiddenMessage{
+      display:none;
+      margin-top:40px;
+      animation:fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn{
+      from{
+        opacity:0;
+        transform:translateY(15px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    .love-letter{
+      margin-top:30px;
+      padding:30px;
+      border-radius:25px;
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.1);
+      line-height:2.7rem;
+      color:#f1fbff;
+      box-shadow:0 0 25px rgba(150,220,255,0.12);
+      position:relative;
+      z-index:10;
+    }
+
+    .date{
+      margin-top:25px;
+      text-align:center;
+      color:#bfe8ff;
+      font-size:0.95rem;
+      opacity:0.85;
+    }
+
+    .mini-letter{
+      margin-top:35px;
+      text-align:center;
+    }
+
+    .letter-btn{
+      background:linear-gradient(45deg,#9edfff,#dff6ff);
+      color:#052033;
+      padding:12px 26px;
+      border:none;
+      border-radius:18px;
+      cursor:pointer;
+      font-size:1rem;
+      font-weight:bold;
+      transition:0.35s;
+      box-shadow:0 0 20px rgba(140,220,255,0.25);
+    }
+
+    .letter-btn:hover{
+      transform:scale(1.05);
+      box-shadow:0 0 30px rgba(140,220,255,0.45);
+    }
+
+    .letter-paper{
+      margin-top:25px;
+      background:rgba(255,255,255,0.08);
+      border:1px solid rgba(255,255,255,0.14);
+      padding:28px;
+      border-radius:24px;
+      line-height:2.5rem;
+      color:#f4fbff;
+      display:none;
+      animation:openLetter 0.8s ease;
+      box-shadow:0 0 25px rgba(130,210,255,0.12);
+    }
+
+    @keyframes openLetter{
+      from{
+        opacity:0;
+        transform:translateY(20px) scale(0.96);
+      }
+
+      to{
+        opacity:1;
+        transform:translateY(0) scale(1);
+      }
+    }
+
+    .final-text{
+      margin-top:30px;
+      font-size:1.15rem;
+      color:#e9f8ff;
+      text-align:center;
+      min-height:40px;
+      text-shadow:0 0 12px rgba(120,210,255,0.3);
+    }
+
+    .heart{
+      position:fixed;
+      color:rgba(255,255,255,0.12);
+      z-index:-1;
+      animation:float 10s linear infinite;
+      user-select:none;
+      pointer-events:none;
+    }
+
+    @keyframes float{
+      from{
+        transform:translateY(110vh);
+        opacity:0;
+      }
+      20%{
+        opacity:1;
+      }
+      to{
+        transform:translateY(-10vh);
+        opacity:0;
+      }
+    }
+
+    .music-box{
+      margin-top:30px;
+      padding:25px;
+      border-radius:25px;
+      background:rgba(255,255,255,0.07);
+      border:1px solid rgba(255,255,255,0.12);
+      backdrop-filter:blur(12px);
+      box-shadow:0 0 25px rgba(120,200,255,0.15);
+    }
+
+    .music-title{
+      margin-bottom:15px;
+      color:#dff5ff;
+      font-size:1.1rem;
+      text-align:center;
+    }
+
+    .counter{
+      margin-top:35px;
+      font-size:1.1rem;
+      color:#bfe8ff;
+    }
+
+    footer{
+      padding:45px 20px;
+      text-align:center;
+      color:#9ecaea;
+      font-size:0.95rem;
+      transition:0.5s;
+    }
+
+    footer span{
+      color:#dff5ff;
+      text-shadow:0 0 15px #7ed7ff;
+    }
+
+    .shooting-star{
+      position:fixed;
+      width:2px;
+      height:120px;
+      background:linear-gradient(to bottom,rgba(255,255,255,1),transparent);
+      transform:rotate(45deg);
+      z-index:-1;
+      opacity:0.8;
+      animation:shoot 1.5s linear forwards;
+    }
+
+    @keyframes shoot{
+      from{
+        transform:translate(0,0) rotate(45deg);
+        opacity:1;
+      }
+      to{
+        transform:translate(-500px,500px) rotate(45deg);
+        opacity:0;
+      }
+    }
+
+    .blur-bg .hero-box,
+.blur-bg footer{
+  filter:blur(4px);
+}
+
+.blur-bg .card{
+  background:rgba(255,255,255,0.04);
+}
+
+    .confetti{
+      position:fixed;
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      pointer-events:none;
+      animation:fall 3s linear forwards;
+      z-index:999;
+    }
+
+    @keyframes fall{
+      from{
+        transform:translateY(-10vh);
+        opacity:1;
+      }
+      to{
+        transform:translateY(100vh);
+        opacity:0;
+      }
+    }
+
+    @media(max-width:768px){
+
+      .hero h1{
+        font-size:2.8rem;
+      }
+
+      .hero p{
+        font-size:1.1rem;
+        line-height:2.2rem;
+      }
+
+      .card h2{
+        font-size:1.8rem;
+      }
+
+      .card p{
+        font-size:1rem;
+      }
+
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <canvas id="stars"></canvas>
+  <div class="overlay"></div>
+
+  <div class="hero">
+
+    <div class="hero-box">
+
+      <h1>تولدت مبارک عمرم 🩵</h1>
+
+      <p>
+        بعضی آدما فقط وارد زندگی آدم نمی‌شن...
+        <br>
+        تبدیل می‌شن به آرامشی که آدم دلش نمی‌خواد هیچ‌وقت از دستش بده.
+      </p>
+
+      <div class="scroll">
+        ↓ یه چیز قشنگ پایین منتظرته ↓
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="section">
+
+    <div class="card">
+
+      <h2>برای تو ✨</h2>
+
+      <p>
+        نمی‌دونم دقیقاً چطوری توضیحش بدم...
+        ولی تو از اون آدمایی شدی که بی‌هوا وسط روز یادشون می‌افتم و لبخند میاد روی صورتم.
+
+        <br><br>
+
+        امیدوارم امسال، هر چیزی که ته دلت می‌خوای آروم‌آروم راهشو پیدا کنه سمتت.
+        چون واقعاً لیاقتشو داری.
+      </p>
+
+      <div class="secret">
+
+        <h2>رازِ قفل شده 😉🫵🏻</h2>
+
+        <input
+          type="password"
+          id="password"
+          placeholder="رمز رو وارد کن..."
+        >
+
+        <br>
+
+        <button onclick="checkPassword()">
+          باز کردن 🩵
+        </button>
+
+        <div id="hiddenMessage">
+
+          <div class="love-letter">
+
+            208 همیشه یه عدد معمولی نبود...
+
+            <br><br>
+
+            تو برای من فقط یه آدم نیستی.
+            یه حسِ امنی،
+            یه اتفاق خوبِ رندوم،
+            و یکی از قشنگ‌ترین بخش‌های این روزامی.
+
+            <br><br>
+
+            شاید همیشه نتونم همه‌چی رو درست بگم...
+            ولی امیدوارم بدونی حضورت،
+            خیلی بیشتر از چیزی که فکر می‌کنی برای من مهمه.
+
+            <br><br>
+
+            تولدت مبارک، قلب من 🩵
+
+            <div class="date">
+              30 May 2026 🌙
+            </div>
+
+            <div class="mini-letter">
+
+              <button class="letter-btn" onclick="toggleLetter()">
+                💌 باز کردن نامه
+              </button>
+
+              <div class="letter-paper" id="letterPaper">
+
+                شاید بگی 208 چیه هی تکرار میکنه این 😂
+
+                <br><br>
+
+                همون عددیه که باهم تصویبش کردیم،
+                که تو نیمی از من باشی 🫂
+
+                <br><br>
+
+                شاید یادت نیاد...
+                ولی خب تولدت باعث شد یادآوری کنم 🩵
+
+              </div>
+
+              <div class="final-text" id="finalText"></div>
+
+            </div>
+
+          </div>
+
+          <div class="music-box">
+
+            <p class="music-title">
+              پلی کن :))
+            </p>
+
+            <iframe
+              src="https://www.aparat.com/video/video/embed/videohash/nyGDk/vt/frame"
+              allowfullscreen="true"
+              webkitallowfullscreen="true"
+              mozallowfullscreen="true"
+              style="width:100%;height:280px;border:none;border-radius:20px;">
+            </iframe>
+
+          </div>
+
+          <div class="counter" id="counter"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <footer>
+    ساخته شده با کلی حس خوب، فقط برای <span>یلدا</span> ✨
+  </footer>
+
+  <script>
+
+    function checkPassword(){
+
+      const password =
+      document.getElementById('password').value;
+
+      if(password === '208'){
+
+        document.getElementById('hiddenMessage').style.display = 'block';
+
+        document.getElementById('hiddenMessage').scrollIntoView({
+          behavior:'smooth'
+        });
+
+        createConfetti();
+
+      }else{
+
+        alert('رمز اشتباهه :(');
+
+      }
+
+    }
+
+    function toggleLetter(){
+
+      const paper =
+      document.getElementById('letterPaper');
+
+      if(paper.style.display === 'block'){
+
+        paper.style.display = 'none';
+
+        document.body.classList.remove('blur-bg');
+
+      }else{
+
+        paper.style.display = 'block';
+
+        document.body.classList.add('blur-bg');
+
+        typeFinalText();
+
+      }
+
+    }
+
+    function typeFinalText(){
+
+      const text =
+      'و احتمالاً… تو قشنگ‌ترین اتفاق زندگی من بودی :)';
+
+      const finalText =
+      document.getElementById('finalText');
+
+      finalText.innerHTML = '';
+
+      let index = 0;
+
+      function type(){
+
+        if(index < text.length){
+
+          finalText.innerHTML += text.charAt(index);
+
+          index++;
+
+          setTimeout(type,70);
+
+        }
+
+      }
+
+      setTimeout(type,800);
+
+    }
+
+    function createConfetti(){
+
+      for(let i=0;i<80;i++){
+
+        const confetti = document.createElement('div');
+
+        confetti.classList.add('confetti');
+
+        confetti.style.left =
+        Math.random()*100 + 'vw';
+
+        confetti.style.top = '-20px';
+
+        confetti.style.background =
+        Math.random() > 0.5 ? '#8fdfff' : '#ffffff';
+
+        confetti.style.animationDuration =
+        (Math.random()*2 + 2) + 's';
+
+        document.body.appendChild(confetti);
+
+        setTimeout(()=>{
+          confetti.remove();
+        },3000);
+
+      }
+
+    }
+
+    for(let i = 0; i < 35; i++){
+
+      const heart = document.createElement('div');
+
+      heart.classList.add('heart');
+
+      heart.innerHTML =
+      Math.random() > 0.5 ? '🩵' : '✨';
+
+      heart.style.left =
+      Math.random() * 100 + 'vw';
+
+      heart.style.fontSize =
+      (Math.random() * 20 + 10) + 'px';
+
+      heart.style.animationDuration =
+      (Math.random() * 5 + 6) + 's';
+
+      heart.style.animationDelay =
+      (Math.random() * 5) + 's';
+
+      document.body.appendChild(heart);
+    }
+
+    function createShootingStar(){
+
+      const star =
+      document.createElement('div');
+
+      star.classList.add('shooting-star');
+
+      star.style.top =
+      Math.random()*40 + 'vh';
+
+      star.style.left =
+      Math.random()*100 + 'vw';
+
+      document.body.appendChild(star);
+
+      setTimeout(()=>{
+        star.remove();
+      },1500);
+
+    }
+
+    setInterval(createShootingStar,9000);
+
+    const canvas =
+    document.getElementById('stars');
+
+    const ctx =
+    canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+    });
+
+    let stars = [];
+
+    for(let i=0;i<120;i++){
+
+      stars.push({
+        x:Math.random()*canvas.width,
+        y:Math.random()*canvas.height,
+        radius:Math.random()*1.5,
+        opacity:Math.random()
+      });
+
+    }
+
+    function drawStars(){
+
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+
+      stars.forEach(star=>{
+
+        ctx.beginPath();
+
+        ctx.arc(
+          star.x,
+          star.y,
+          star.radius,
+          0,
+          Math.PI*2
+        );
+
+        ctx.fillStyle =
+        `rgba(255,255,255,${star.opacity})`;
+
+        ctx.fill();
+
+        star.opacity +=
+        (Math.random()-0.5)*0.05;
+
+        if(star.opacity <=0.1)
+        star.opacity = 0.1;
+
+        if(star.opacity >=1)
+        star.opacity = 1;
+
+      });
+
+      requestAnimationFrame(drawStars);
+
+    }
+
+    drawStars();
+
+    const counter =
+    document.getElementById('counter');
+
+    function updateCounter(){
+
+      counter.innerHTML = `
+      خواستم یه چیزی بسازم که هر بار دیدیش، لبخند بزنی 🩵🌙
+      `;
+
+    }
+
+    updateCounter();
+
+  </script>
+
+</body>
+</html>
